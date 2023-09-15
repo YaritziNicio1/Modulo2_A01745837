@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.metrics import mean_squared_error, f1_score, accuracy_score, confusion_matrix
+from sklearn.metrics import mean_squared_error, f1_score, confusion_matrix
 
 #Se carga el set de datos desde sklearn
 df = datasets.load_iris()
@@ -85,7 +85,7 @@ confusion_train = confusion_matrix(y_train_c, predic_t3)
 print("Matriz de Confusión: ")
 print(confusion_train)
 
-
+#--------------------------------------------------------------------------------------------------------
 #Ahora, se utiliza un valor de k=6
 print("Usando un valor de k=6")
 # Impolementación del modelo KNN con los valores de K correspondientes
@@ -116,7 +116,9 @@ confusion_t6 = confusion_matrix(y_train_c, predic_t6)
 print("Matriz de Confusión: ")
 print(confusion_t6)
 
-#Ahora, se utiliza un valor de k=9
+
+#------------------------------------------------------------------------------------------------------------------
+#Por último, se utiliza un valor de k=9
 print("Usando un valor de k=9")
 # Impolementación del modelo KNN con los valores de K correspondientes
 clf = KNeighborsClassifier(n_neighbors=9)
@@ -145,6 +147,41 @@ print("MSE:", mse_t9)
 confusion_t9 = confusion_matrix(y_train_c, predic_t9)
 print("Matriz de Confusión: ")
 print(confusion_t9)
+
+#Se hace el mismo procedimiento para los datos de validation y test 
+    #Se involucra un ciclo for 
+for i in range(len(k)):
+    #****Para datos de validación********* 
+    print("Usando un valor de k=".format(k[i]))
+    # Implementación del modelo KNN con los valores de K correspondientes
+    clf = KNeighborsClassifier(n_neighbors=k[i])
+    clf.fit(X_train_c, y_train_c)
+    predic_t9 = clf.predict(X_train_c)
+    print("Se obtienen las siguientes predicciones: ",predic_t9)
+    #Se calcula el accuracy del modelo
+    #Compara las etiquetas predichas con las verdaderas y suma cuántas son correctas contando las coincidencias 
+    correct_predictions = np.sum(predic_t9 == y_train_c)
+    #Se obtiene el número total de predicciones hechas 
+    total_predictions = len(y_train_c)
+    #Calculo de las predicciones correctas entre el total de predicciones, asi se obtiene el accuracy 
+    accuracy9 = correct_predictions / total_predictions
+    print(accuracy9)
+
+    # Calculamos el F1 Score
+    f1_t9 = f1_score(y_train_c, predic_t9, average='weighted')
+    print("Puntaje F1:", f1_t9)
+
+    #Se calcula el MSE
+    mse_t9 = mean_squared_error(y_train_c, predic_t9)
+    print("MSE:", mse_t9)
+
+    # Se hace una matriz de confusión
+    confusion_t9 = confusion_matrix(y_train_c, predic_t9)
+    print("Matriz de Confusión: ")
+    print(confusion_t9)
+
+
+
 
 '''
 for i in range(len(k)):
