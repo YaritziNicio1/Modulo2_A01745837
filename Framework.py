@@ -56,7 +56,7 @@ plt.show()
 #Definimos el número de k vecinos cercanos a implementar en el modelo 
 k = [3,6,9]
 
-print("Usando un valor de k=3")
+print("*Train* Usando un valor de k=3")
 # Impolementación del modelo KNN con los valores de K correspondientes
 clf = KNeighborsClassifier(n_neighbors=3)
 clf.fit(X_train_c, y_train_c)
@@ -87,7 +87,7 @@ print(confusion_train)
 
 #--------------------------------------------------------------------------------------------------------
 #Ahora, se utiliza un valor de k=6
-print("Usando un valor de k=6")
+print("*Train* Usando un valor de k=6")
 # Impolementación del modelo KNN con los valores de K correspondientes
 clf = KNeighborsClassifier(n_neighbors=6)
 clf.fit(X_train_c, y_train_c)
@@ -96,11 +96,11 @@ print("Se obtienen las siguientes predicciones: ",predic_t6)
 
 #Se calcula el accuracy del modelo
     #Compara las etiquetas predichas con las verdaderas y suma cuántas son correctas contando las coincidencias 
-correct_predictions = np.sum(predic_t6 == y_train_c)
+correct_predictions6 = np.sum(predic_t6 == y_train_c)
     #Se obtiene el número total de predicciones hechas 
-total_predictions = len(y_train_c)
+total_predictions6 = len(y_train_c)
     #Calculo de las predicciones correctas entre el total de predicciones, asi se obtiene el accuracy 
-accuracy6 = correct_predictions / total_predictions
+accuracy6 = correct_predictions6 / total_predictions6
 print(accuracy6)
 
 # Calculamos el F1 Score
@@ -119,7 +119,7 @@ print(confusion_t6)
 
 #------------------------------------------------------------------------------------------------------------------
 #Por último, se utiliza un valor de k=9
-print("Usando un valor de k=9")
+print("*Train* Usando un valor de k=9")
 # Impolementación del modelo KNN con los valores de K correspondientes
 clf = KNeighborsClassifier(n_neighbors=9)
 clf.fit(X_train_c, y_train_c)
@@ -128,11 +128,11 @@ print("Se obtienen las siguientes predicciones: ",predic_t9)
 
 #Se calcula el accuracy del modelo
     #Compara las etiquetas predichas con las verdaderas y suma cuántas son correctas contando las coincidencias 
-correct_predictions = np.sum(predic_t9 == y_train_c)
+correct_predictions9 = np.sum(predic_t9 == y_train_c)
     #Se obtiene el número total de predicciones hechas 
-total_predictions = len(y_train_c)
+total_predictions9 = len(y_train_c)
     #Calculo de las predicciones correctas entre el total de predicciones, asi se obtiene el accuracy 
-accuracy9 = correct_predictions / total_predictions
+accuracy9 = correct_predictions9 / total_predictions9
 print(accuracy9)
 
 # Calculamos el F1 Score
@@ -152,36 +152,68 @@ print(confusion_t9)
     #Se involucra un ciclo for 
 for i in range(len(k)):
     #****Para datos de validación********* 
-    print("Usando un valor de k=".format(k[i]))
+    print("*Validación* Usando un valor de k={0}".format(k[i]))
     # Implementación del modelo KNN con los valores de K correspondientes
     clf = KNeighborsClassifier(n_neighbors=k[i])
-    clf.fit(X_train_c, y_train_c)
-    predic_t9 = clf.predict(X_train_c)
-    print("Se obtienen las siguientes predicciones: ",predic_t9)
+    clf.fit(X_valid, y_valid)
+    predict_v = clf.predict(X_valid)
+    print("Se obtienen las siguientes predicciones: ",predict_v)
     #Se calcula el accuracy del modelo
     #Compara las etiquetas predichas con las verdaderas y suma cuántas son correctas contando las coincidencias 
-    correct_predictions = np.sum(predic_t9 == y_train_c)
+    correct_pred_v = np.sum(predict_v == y_valid)
     #Se obtiene el número total de predicciones hechas 
-    total_predictions = len(y_train_c)
+    total_pred_v = len(y_valid)
     #Calculo de las predicciones correctas entre el total de predicciones, asi se obtiene el accuracy 
-    accuracy9 = correct_predictions / total_predictions
-    print(accuracy9)
+    accuracy_v = correct_pred_v / total_pred_v
+    print("Accuracy: ",accuracy_v)
 
     # Calculamos el F1 Score
-    f1_t9 = f1_score(y_train_c, predic_t9, average='weighted')
-    print("Puntaje F1:", f1_t9)
+    f1_v = f1_score(y_valid, predict_v, average='weighted')
+    print("Puntaje F1:", f1_v)
 
     #Se calcula el MSE
-    mse_t9 = mean_squared_error(y_train_c, predic_t9)
-    print("MSE:", mse_t9)
+    mse_v = mean_squared_error(y_valid, predict_v)
+    print("MSE:", mse_v)
 
     # Se hace una matriz de confusión
-    confusion_t9 = confusion_matrix(y_train_c, predic_t9)
+    confusion_v = confusion_matrix(y_valid, predict_v)
     print("Matriz de Confusión: ")
-    print(confusion_t9)
+    print(confusion_v)
 
 
+    #****Para datos de test********* 
+    print("*Test* Usando un valor de k={0}".format(k[i]))
+    # Implementación del modelo KNN con los valores de K correspondientes
+    clf = KNeighborsClassifier(n_neighbors=k[i])
+    clf.fit(X_test_c, y_test_c)
+    predict_t = clf.predict(X_test_c)
+    print("Se obtienen las siguientes predicciones: ",predict_t)
+    #Se calcula el accuracy del modelo
+    #Compara las etiquetas predichas con las verdaderas y suma cuántas son correctas contando las coincidencias 
+    co_pred_test = np.sum(predict_t == y_test_c)
+    #Se obtiene el número total de predicciones hechas 
+    total_pred_test = len(y_test_c)
+    #Calculo de las predicciones correctas entre el total de predicciones, asi se obtiene el accuracy 
+    accuracyte = co_pred_test / total_pred_test
+    print("Accuracy: ",accuracyte)
 
+    # Calculamos el F1 Score
+    f1_te = f1_score(y_test_c, predict_t, average='weighted')
+    print("Puntaje F1:", f1_te)
+
+    #Se calcula el MSE
+    mse_te = mean_squared_error(y_test_c, predict_t)
+    print("MSE:", mse_te)
+
+    # Se hace una matriz de confusión
+    confus_te = confusion_matrix(y_test_c, predict_t)
+    print("Matriz de Confusión: ")
+    print(confus_te)
+
+    print("\n\n")
+
+
+#***
 
 '''
 for i in range(len(k)):
