@@ -55,6 +55,7 @@ plt.show()
 
 #Definimos el número de k vecinos cercanos a implementar en el modelo 
 k = [3,6,9]
+#Se utilizan número impares porque es más dificil que haya un empate de clasifiación al momento de hacer la predicción
 
 #Imprimimos el valor a utilizar
 print("*Train* Usando un valor de k=3")
