@@ -18,7 +18,7 @@ X, y = df.data, df.target
 # Se dividen los datos en train, test y validation 
 #Se genera la semilla con el stándar de 42 para que el modelo sea reproducible 
 #Primero se divide en un conjunto temporal y en prueba
-X_temp, X_valid, y_temp, y_valid = train_test_split(X, y, test_size=0.2, random_state=42)
+X_temp, X_valid, y_temp, y_valid = train_test_split(X, y, test_size=0.5, random_state=42)
 #Se divide de nuevo, ahora en un conjunto de entrenamiento y validación con el conjunto temporal anterior 
 X_train_c, X_test_c, y_train_c, y_test_c = train_test_split(X_temp, y_temp, test_size=0.5, random_state=42)
 
